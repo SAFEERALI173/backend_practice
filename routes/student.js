@@ -9,7 +9,15 @@ let data = [
 ]
 
 Router.get("/",(req,res)=>{
+    let paramsObj = req.query
+    console.log(paramsObj)
     res.json(data)
+})
+Router.get("/:id",(req,res)=>{
+    let id = req.params.id
+    console.log(id)
+    let result = data.find((x)=>x.id == id)
+    res.json(result)
 })
 
 Router.post("/",(req,res)=>{
