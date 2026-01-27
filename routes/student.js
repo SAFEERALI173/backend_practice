@@ -1,4 +1,5 @@
 const express = require("express");
+const StudentModel = require("../models/studentmodel");
 
 const Router = express.Router();
 
@@ -8,10 +9,10 @@ let data = [
     {id:3, name:"Doe"}
 ]
 
-Router.get("/",(req,res)=>{
+Router.get("/",async (req,res)=>{
     let paramsObj = req.query
-    console.log(paramsObj)
-    res.json(data)
+    let result = await StudentModel.find({})
+    res.json(result)
 })
 Router.get("/:id",(req,res)=>{
     let id = req.params.id
@@ -22,7 +23,7 @@ Router.get("/:id",(req,res)=>{
 
 Router.post("/",(req,res)=>{
     const body = req.body
-    let arr = ["name","age"]
+    let arr = ["studentName","cnic"]
 
     let errArr = []
     arr.forEach((key)=>{
@@ -39,7 +40,23 @@ Router.post("/",(req,res)=>{
         })
     }
 
-    res.json(body)
+    const obj = new StudentModel(body)
+    obj.save()
+    .then((result)=>{
+        res.json({
+            success: true,
+            message: "Successfully Added",
+            data: result
+        })
+    })
+    .catch((err)=>{
+        res.status(400).json({
+            success: false,
+            message: err.message,
+            data: null
+        })
+    })
+
 })
 
 module.exports = Router
