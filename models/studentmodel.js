@@ -12,5 +12,6 @@ const StudentSchema = mongoose.Schema({
         unique:true
     }
 })
+
 const StudentModel = mongoose.model("students",StudentSchema)
 module.exports = StudentModel
