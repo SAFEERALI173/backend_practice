@@ -17,7 +17,6 @@ Router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params
         const result = await GradeModel.findById(id)
-
         res.json(ResponseObj(true, "Success", result))
     } catch (error) {
         console.log(error)
@@ -29,7 +28,6 @@ Router.get("/:id", async (req, res) => {
 Router.post("/", (req, res) => {
     try {
         const body = req.body
-
         const Grade = new GradeModel(body)
         Grade.save()
             .then((result) => {
